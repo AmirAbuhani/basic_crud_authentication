@@ -9,7 +9,7 @@ def read_from_db():
         the dictionary of the students or empty list if there is an error file
     """
     try:
-        with open("students_db.json", "r") as file:
+        with open("data/students_db.json", "r") as file:
             return json.load(file)["students"]
     except FileNotFoundError:
         return {"students": []}
@@ -19,7 +19,7 @@ def read_from_db():
 def write_to_db(student):
     # Load existing data
     try:
-        with open("students_db.json", "r") as file:
+        with open("data/students_db.json", "r") as file:
             data = json.load(file)
     except FileNotFoundError:
         data = {"students": []}
@@ -28,5 +28,5 @@ def write_to_db(student):
     data["students"].append(student)
 
     # Write updated data back to the file
-    with open("students_db.json", "w") as file:
+    with open("data/students_db.json", "w") as file:
         json.dump(data, file, indent=2)

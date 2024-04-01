@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/basic crud server.iml" filepath="$PROJECT_DIR$/.idea/basic crud server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../servers/.idea/servers.iml" filepath="$PROJECT_DIR$/../servers/.idea/servers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../lesson17_1.4.24/fastapi/.idea/fastapi.iml" filepath="$PROJECT_DIR$/../../lesson17_1.4.24/fastapi/.idea/fastapi.iml" />
     </modules>
   </component>
 </project>

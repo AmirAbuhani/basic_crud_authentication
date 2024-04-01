@@ -6,9 +6,9 @@ it.
 
 By the 2 functions in the read_write_db module, we can access to the db.
 
-The main module is the school_api. at first, we create an instance of fastapi(app) that listening for incoming HTTP 
-requests and responds. we also create a Student class that inherits from the BaseModel class using pydantic.
-then, we have 4 endpoints:
+The main module is the school_api. at first, I create an instance of routeAPI(router) that listening for incoming HTTP 
+requests and responds. by the server module, I create an instance of fastAPI, through it, we can activate the server.
+I'm also create a Student class that inherits from the BaseModel class using pydantic. We have 4 endpoints:
 
 1- GET /all-students: Returns a list of all students.
 

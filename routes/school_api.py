@@ -1,22 +1,14 @@
 from typing import List
-from fastapi import FastAPI, Path, HTTPException
-from pydantic import BaseModel
+from fastapi import APIRouter, Path, HTTPException
 from read_write_db import read_from_db, write_to_db
+from models.student_model import Student
 
-# creating fastapi, for using it to define endpoints late
-app = FastAPI()
-
-
-# defines a Pydantic model Student with four fields
-class Student(BaseModel):
-    name: str
-    id: int
-    age: int
-    classes: List[str]
+# creating api router, for using it to define endpoints later
+router = APIRouter()
 
 
 # get all students
-@app.get("/all-students", response_model=List[Student])
+@router.get("/all-students", response_model=List[Student])
 def get_all_students():
     """
     return: this endpoint returns all the students in db
@@ -26,7 +18,7 @@ def get_all_students():
 
 
 # get specific student by id
-@app.get("/get-student/{student_id}", response_model=Student)
+@router.get("/get-student/{student_id}", response_model=Student)
 def get_student(student_id: int = Path(..., description="The ID of the student you would like to view")):
     """
     param student_id: by student_id, we can get the student that we want
@@ -40,7 +32,7 @@ def get_student(student_id: int = Path(..., description="The ID of the student y
 
 
 # add student
-@app.post("/add-student", response_model=Student)
+@router.post("/add-student", response_model=Student)
 def add_student(student_id: int, student: Student):
     """
     param student_id: to check if there is an exist student with this id
@@ -59,7 +51,7 @@ def add_student(student_id: int, student: Student):
 
 
 # get all students in a class
-@app.get("/get-students-in-class/{class_name}", response_model=List[str])
+@router.get("/get-students-in-class/{class_name}", response_model=List[str])
 def get_students_in_class(class_name: str = Path(..., description="The class that you would view its students")):
     """
     param class_name: the class name that through it we search about students
