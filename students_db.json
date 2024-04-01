@@ -1,0 +1,29 @@
+{
+  "students": [
+    {
+      "name": "amir",
+      "id": 1,
+      "age": 28,
+      "classes": [
+        "backend 1"
+      ]
+    },
+    {
+      "name": "akram",
+      "id": 2,
+      "age": 25,
+      "classes": [
+        "cyber"
+      ]
+    },
+    {
+      "name": "bob",
+      "id": 3,
+      "age": 30,
+      "classes": [
+        "backend 1",
+        "intro to programming"
+      ]
+    }
+  ]
+}
