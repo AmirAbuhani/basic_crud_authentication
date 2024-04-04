@@ -9,12 +9,11 @@ def read_users():
 
 def write_users(username, password):
     data = read_users()
-    # if isinstance(password, bytes):
-    #     password = password.decode('utf-8')
     detail = {
         "username": username,
         "password": password
     }
-    data.append(detail)  # Append the new user detail to the existing data
-    with open("data/usernames_passwords.json", "w") as file:  # Open in write mode
+    # Append the new user detail to the existing data
+    data.append(detail)
+    with open("data/usernames_passwords.json", "w") as file:
         json.dump(data, file, indent=2)
