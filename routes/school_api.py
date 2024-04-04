@@ -1,29 +1,28 @@
 from typing import List
-from fastapi import APIRouter, Path, HTTPException
+from fastapi import APIRouter, Path, HTTPException, Depends
 from read_write_db import read_from_db, write_to_db
 from models.student_model import Student
+from auth.jwt_bearer import jwtBearer
+from routes.sign_in_up import is_admin
 
 # creating api router, for using it to define endpoints later
 router = APIRouter()
 
 
-# get all students
-@router.get("/all-students", response_model=List[Student])
+# This route retrieves all students from the database. It requires JWT token authentication,
+# ensuring only authenticated users can access this endpoint
+@router.get("/all-students", response_model=List[Student], dependencies=[Depends(jwtBearer())],
+            tags=["student functionality"])
 def get_all_students():
-    """
-    return: this endpoint returns all the students in db
-    """
     students = read_from_db()
     return students
 
 
-# get specific student by id
-@router.get("/get-student/{student_id}", response_model=Student)
+# This route retrieves a specific student by their ID from the database. It requires JWT token authentication
+@router.get("/get-student/{student_id}", response_model=Student, dependencies=[Depends(jwtBearer())], tags=["student "
+                                                                                                            "functionality"])
 def get_student(student_id: int = Path(..., description="The ID of the student you would like to view")):
-    """
-    param student_id: by student_id, we can get the student that we want
-    return: a student object, else: error message
-    """
+
     students = read_from_db()
     for student in students:
         if student["id"] == student_id:
@@ -31,14 +30,10 @@ def get_student(student_id: int = Path(..., description="The ID of the student y
     raise HTTPException(status_code=404, detail="Student id not found")
 
 
-# add student
-@router.post("/add-student", response_model=Student)
+# This route adds a new student to the database. It requires admin authentication,
+# which is checked using the is_admin dependency.
+@router.post("/add-student", dependencies=[Depends(is_admin)], response_model=Student, tags=["student functionality"])
 def add_student(student_id: int, student: Student):
-    """
-    param student_id: to check if there is an exist student with this id
-    param student: a Student object that we want to add to db
-    return: a dictionary of student's details(using Student class)
-    """
     students = read_from_db()
     students_ids = []
     for stu in students:
@@ -50,13 +45,10 @@ def add_student(student_id: int, student: Student):
     return create_student
 
 
-# get all students in a class
-@router.get("/get-students-in-class/{class_name}", response_model=List[str])
+# This route retrieves all students belonging to a specific class from the database. It requires admin authentication
+@router.get("/get-students-in-class/{class_name}", dependencies=[Depends(is_admin)], response_model=List[str],
+            tags=["student functionality"])
 def get_students_in_class(class_name: str = Path(..., description="The class that you would view its students")):
-    """
-    param class_name: the class name that through it we search about students
-    return: a list of the students names that exist in a specific class(class_name)
-    """
     students = read_from_db()
     class_students = []
     for stu in students:
