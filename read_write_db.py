@@ -30,3 +30,8 @@ def write_to_db(student):
     # Write updated data back to the file
     with open("data/students_db.json", "w") as file:
         json.dump(data, file, indent=2)
+
+
+def write_to_db_after_delete(students):
+    with open("data/students_db.json", "w") as file:
+        json.dump({"students": students}, file, indent=2)
